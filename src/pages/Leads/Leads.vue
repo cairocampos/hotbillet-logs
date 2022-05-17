@@ -6,48 +6,55 @@
     <Loading v-if="loading"/>
     <p v-if="!loading && cliente && !Object.keys(cliente).length">Nenhum registro encontrado</p>
     <div v-if="cliente" class="my-10 grid grid-cols-4 gap-4">
-      <div v-for="item in cliente.lead_log" :key="item.id" class="p-4 shadow-md rounded-md bg-white">
+      <div v-for="item in cliente.leads" :key="item.id" class="p-4 shadow-md rounded-md bg-white">
         <div>
           <span class="text-xs text-zinc-500">Produto</span>
-          <h3>{{item.lead.produto.nome}}</h3>
+          <h3>{{item.produto.nome}}</h3>
         </div>
         <div>
           <span class="text-xs text-zinc-500">Vendedor(a)</span>
-          <h3>{{item.lead.vendedor.name}}</h3>
+          <h3>{{item.vendedor.name}}</h3>
         </div>
         <div>
           <span class="text-xs text-zinc-500">valor</span>
-          <h3>{{item.lead.valorRecebido ?? item.lead.valor ?? '---'}}</h3>
+          <h3>{{item.valorRecebido ?? item.valor ?? '---'}}</h3>
         </div>
         <div>
           <span class="text-xs text-zinc-500">Status</span>
-          <h3 v-html="statusLead(item.lead.status)" class="font-bold"></h3>
+          <h3 v-html="statusLead(item.status)" class="font-bold"></h3>
         </div>
         <div>
           <span class="text-xs text-zinc-500">Plataforma</span>
-          <h3>{{item.lead.meioPagamento ?? '---'}}</h3>
+          <h3>{{item.meioPagamento ?? '---'}}</h3>
         </div>
         <div>
           <span class="text-xs text-zinc-500">Forma de Pagamento</span>
-          <h3>{{item.lead.formaPagamento ?? '---'}}</h3>
+          <h3>{{item.formaPagamento ?? '---'}}</h3>
         </div>
         <div>
           <span class="text-xs text-zinc-500">Status do Pagamento</span>
-          <h3>{{item.lead.statusPagamento}}</h3>
+          <h3>{{item.statusPagamento}}</h3>
         </div>
         <div>
           <span class="text-xs text-zinc-500">Lead iniciado em</span>
-          <h3>{{item.lead.data_inicio ?? '---'}}</h3>
+          <h3>{{item.data_inicio ? dateFormat(item.data_inicio) : '---'}}</h3>
         </div>
         <div>
           <span class="text-xs text-zinc-500">Lead finalizado em</span>
-          <h3>{{item.lead.data_finalizada ?? "---"}}</h3>
+          <h3>{{item.data_finalizada ? dateFormat(item.data_finalizada) : '---'}}</h3>
         </div>
-        <div class="my-4 w-full">
-          <a target="_blank" :href="`https://app.hotbillet.com.br/leads/${item.id}`" class="text-xs bg-zinc-700 text-white px-4 py-2 rounded-full w-full">Acessar</a>
+        <div @click="onLeadSelect(item)" class="bg-zinc-200 p-2 rounded-md text-sm text-zinc-500 text-center cursor-pointer">
+          Registro de logs
         </div>
+        <a
+          target="_blank"
+          :href="`https://app.hotbillet.com.br/leads/${item.id}`"
+          class="my-2 block text-sm bg-zinc-700 text-white p-2 rounded-md w-full text-center">Acessar</a>
       </div>
     </div>
+
+
+    <Logs v-model="leadSelected" v-if="leadSelected"/>
   </div>
 </template>
 
@@ -57,8 +64,9 @@ import TextField from '@/components/UI/Form/TextField/TextField.vue';
 import { onMounted, ref, watch } from 'vue';
 import { http } from '@/services';
 import Loading from '@/components/UI/Loading/Loading.vue';
-import {LeadProduct} from '@/interfaces/ILead'
+import {Lead, LeadProduct} from '@/interfaces/ILead'
 import Button from '@/components/UI/Button/Button.vue';
+import Logs from './components/Logs.vue';
 const loading = ref(false)
 const cliente = ref<LeadProduct>()
 
@@ -97,6 +105,13 @@ const statusLead = (status:string) => {
 
   // @ts-ignore
   return statusDesc.hasOwnProperty(status) ? statusDesc[status] : "Não identificado"
+}
+
+const dateFormat = (date:string) => new Date(date).toLocaleString()
+
+const leadSelected = ref<Lead>()
+const onLeadSelect = (lead: Lead) => {
+  leadSelected.value = lead
 }
 
 onMounted(() => fetchLeads())

@@ -11,27 +11,19 @@ export interface ListaComissionado {
     updated_at: string;
 }
 
-export interface Produto {
+export interface Log {
     id: number;
-    produtor_id: number;
-    user_id: number;
-    nome: string;
-    sigla: string;
-    url: string;
-    kapsula_id?: any;
-    fisico: number;
-    afiliado: number;
-    lista_bloqueio_afiliados: string;
-    lista_bloqueio_telefone_afiliados: string;
+    lead_id: number;
+    cliente_id: number;
+    retorno_id: number;
     status: number;
     created_at: string;
     updated_at: string;
-    deleted_at?: any;
-    tipo_transacao: string;
-    email_suporte: string;
-    contato_suporte: string;
-    tipo_comissao: number;
-    valor_comissao: string;
+}
+
+export interface Produto {
+    id: number;
+    nome: string;
 }
 
 export interface Vendedor {
@@ -42,30 +34,51 @@ export interface Vendedor {
 
 export interface Lead {
     id: number;
-    valorRecebido: string;
+    produto_id: number;
+    cliente_id: number;
+    plataforma: number;
+    transacao: string;
     valor: string;
-    status: string;
+    quantidade: string;
+    valorRecebido: string;
+    tipo_frete: string;
+    descr_tipo_frete?: any;
+    valor_frete: string;
+    onebuyclick?: any;
+    venda_upsell?: any;
+    upsell_esperado?: any;
+    data_inicio: string;
+    data_finalizada: string;
     meioPagamento: string;
     formaPagamento: string;
+    formaPagamentoCode: number;
     statusPagamento: string;
-    data_inicio: string;
-    data_finalizada?: any;
+    garantiaRestante: string;
     vendedor_id: number;
-    produto_id: number;
-    listaComissionados: ListaComissionado[];
-    produto: Produto;
-    vendedor: Vendedor;
-}
-
-export interface LeadLog {
-    id: number;
-    lead_id: number;
-    cliente_id: number;
-    retorno_id: number;
-    status: number;
+    status: string;
     created_at: string;
     updated_at: string;
-    lead: Lead;
+    link_boleto?: any;
+    codigo_plano: string;
+    referencia_plano: string;
+    nome_plano: string;
+    quantidade_plano: string;
+    linha_digitavel?: any;
+    ga_selfUrl: string;
+    ga_deleteDate: string;
+    google_agenda: number;
+    comprovante?: any;
+    follow_up?: any;
+    faturado: number;
+    fila_faturamento: number;
+    vencimento_boleto?: any;
+    data_agendamento?: any;
+    carrinho_descricao: string;
+    ltv: number;
+    listaComissionados: ListaComissionado[];
+    logs: Log[];
+    produto: Produto;
+    vendedor: Vendedor;
 }
 
 export interface LeadProduct {
@@ -73,7 +86,7 @@ export interface LeadProduct {
     nome: string;
     email: string;
     telefone_01: string;
-    telefone_02: string;
+    telefone_02?: any;
     cnpj_cpf: string;
     data_nascimento: string;
     cep: string;
@@ -86,5 +99,5 @@ export interface LeadProduct {
     pais: string;
     created_at: string;
     updated_at: string;
-    lead_log: LeadLog[];
+    leads: Lead[];
 }
