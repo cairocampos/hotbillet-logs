@@ -4,8 +4,8 @@
     <router-link to="/" class="text-zinc-700 text-xs">Voltar</router-link>
 
     <Loading v-if="loading"/>
-    <p v-if="!loading && !Object.keys(cliente).length">Nenhum registro encontrado</p>
-    <div class="my-10 grid grid-cols-4 gap-4">
+    <p v-if="!loading && cliente && !Object.keys(cliente).length">Nenhum registro encontrado</p>
+    <div v-if="cliente" class="my-10 grid grid-cols-4 gap-4">
       <div v-for="item in cliente.leads" :key="item.id" class="p-4 shadow-md rounded-md bg-white">
         <div>
           <span class="text-xs text-zinc-500">Produto</span>
@@ -60,7 +60,7 @@ import Loading from '@/components/UI/Loading/Loading.vue';
 import {LeadProduct} from '@/interfaces/ILead'
 import Button from '@/components/UI/Button/Button.vue';
 const loading = ref(false)
-const cliente = ref<LeadProduct>([])
+const cliente = ref<LeadProduct>()
 
 const props = defineProps({
   id: {

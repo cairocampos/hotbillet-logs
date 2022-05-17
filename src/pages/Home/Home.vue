@@ -1,6 +1,6 @@
 <template>
   <div>
-    <PageHead :title="$route.meta.title"/>
+    <PageHead title="Leads"/>
 
     <div class="my-10">
       <TextField
