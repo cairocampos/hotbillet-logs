@@ -14,7 +14,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api/v1': {
-        target: "https://app.hotbillet.com.br",
+        target: "http://localhost",
         changeOrigin:true
       }
     }

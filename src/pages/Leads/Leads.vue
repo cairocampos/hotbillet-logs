@@ -6,42 +6,42 @@
     <Loading v-if="loading"/>
     <p v-if="!loading && cliente && !Object.keys(cliente).length">Nenhum registro encontrado</p>
     <div v-if="cliente" class="my-10 grid grid-cols-4 gap-4">
-      <div v-for="item in cliente.leads" :key="item.id" class="p-4 shadow-md rounded-md bg-white">
+      <div v-for="item in cliente.lead_log" :key="item.id" class="p-4 shadow-md rounded-md bg-white">
         <div>
           <span class="text-xs text-zinc-500">Produto</span>
-          <h3>{{item.produto.nome}}</h3>
+          <h3>{{item.lead.produto.nome}}</h3>
         </div>
         <div>
           <span class="text-xs text-zinc-500">Vendedor(a)</span>
-          <h3>{{item.vendedor.name}}</h3>
+          <h3>{{item.lead.vendedor.name}}</h3>
         </div>
         <div>
           <span class="text-xs text-zinc-500">valor</span>
-          <h3>{{item.valorRecebido ?? item.valor ?? '---'}}</h3>
+          <h3>{{item.lead.valorRecebido ?? item.lead.valor ?? '---'}}</h3>
         </div>
         <div>
           <span class="text-xs text-zinc-500">Status</span>
-          <h3 v-html="statusLead(item.status)" class="font-bold"></h3>
+          <h3 v-html="statusLead(item.lead.status)" class="font-bold"></h3>
         </div>
         <div>
           <span class="text-xs text-zinc-500">Plataforma</span>
-          <h3>{{item.meioPagamento ?? '---'}}</h3>
+          <h3>{{item.lead.meioPagamento ?? '---'}}</h3>
         </div>
         <div>
           <span class="text-xs text-zinc-500">Forma de Pagamento</span>
-          <h3>{{item.formaPagamento ?? '---'}}</h3>
+          <h3>{{item.lead.formaPagamento ?? '---'}}</h3>
         </div>
         <div>
           <span class="text-xs text-zinc-500">Status do Pagamento</span>
-          <h3>{{item.statusPagamento}}</h3>
+          <h3>{{item.lead.statusPagamento}}</h3>
         </div>
         <div>
           <span class="text-xs text-zinc-500">Lead iniciado em</span>
-          <h3>{{item.data_inicio ?? '---'}}</h3>
+          <h3>{{item.lead.data_inicio ?? '---'}}</h3>
         </div>
         <div>
           <span class="text-xs text-zinc-500">Lead finalizado em</span>
-          <h3>{{item.data_finalizada ?? "---"}}</h3>
+          <h3>{{item.lead.data_finalizada ?? "---"}}</h3>
         </div>
         <div class="my-4 w-full">
           <a target="_blank" :href="`https://app.hotbillet.com.br/leads/${item.id}`" class="text-xs bg-zinc-700 text-white px-4 py-2 rounded-full w-full">Acessar</a>
