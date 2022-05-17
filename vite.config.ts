@@ -4,7 +4,7 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  publicDir: "logs",
+  base: "/logs",
   plugins: [vue()],
   resolve: {
     alias: {
